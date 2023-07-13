@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        target: [K2P, K2P-NANO, K2P-USB]
+        target: [NEWIFI3]
         toolchain: [mipsel-linux-uclibc, mipsel-linux-musl]
     steps:
       - uses: actions/checkout@v3
@@ -35,9 +35,9 @@ jobs:
       - name: Build
         run: |
           make ${{ matrix.target }} TOOLCHAIN=${{ matrix.toolchain }}
-          if [ "${{ matrix.target }}" = "K2P-NANO" ]; then
+          if [ "${{ matrix.target }}" = "NEWIFI3" ]; then
             image=$(ls trunk/images/*.trx)
-            mv $image $(echo $image | sed 's/K2P/K2P-NANO/')
+            mv $image $(echo $image | sed 's/NEWIFI3/')
           fi
       - uses: actions/upload-artifact@v3
         with:
